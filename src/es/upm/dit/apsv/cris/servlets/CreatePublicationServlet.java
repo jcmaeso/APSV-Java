@@ -30,15 +30,10 @@ public class CreatePublicationServlet extends HttpServlet {
 		String publicationDate = req.getParameter( "publicationDate" );
 		String authors = req.getParameter("authors");
 		
-		Publication publication = new Publication();
-		publication.setId(id);
-		publication.setTitle(title);
-		publication.setPublicationName(publicationName);
-		publication.setPublicationDate(publicationDate);
-		publication.setAuthors(authors);
+		Publication publication = new Publication(id,title,publicationName,publicationDate,authors);
 		
 		PublicationDAO pdao = PublicationDAOImplementation.getInstance();
-		pdao.create(publication);
+		pdao.create(new Publication(id,title,publicationName,publicationDate,authors));
 		
 		ResearcherDAO rdao = ResearcherDAOImplementation.getInstance();
 	    Researcher researcher = rdao.read(user.getId());

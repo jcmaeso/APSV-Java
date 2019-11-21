@@ -1,6 +1,8 @@
 package es.upm.dit.apsv.cris.servlets;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +13,8 @@ import es.upm.dit.apsv.cris.dao.PublicationDAO;
 import es.upm.dit.apsv.cris.dao.PublicationDAOImplementation;
 import es.upm.dit.apsv.cris.dao.ResearcherDAO;
 import es.upm.dit.apsv.cris.dao.ResearcherDAOImplementation;
+import es.upm.dit.apsv.cris.model.Publication;
+import es.upm.dit.apsv.cris.model.Researcher;
 
 /**
  * Servlet implementation class AdminServlet
@@ -20,17 +24,14 @@ public class AdminServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		ResearcherDAO rdao = ResearcherDAOImplementation.getInstance();
-		req.getSession().setAttribute( "researcherslist", rdao.readAll() );
-		PublicationDAO pdao = PublicationDAOImplementation.getInstance();
-		req.getSession().setAttribute( "publicationslist", pdao.readAll() );
-		
-		if (req.getSession() != null) {
-			getServletContext().getRequestDispatcher( "/AdminView.jsp" ).forward( req, resp );
-		} else {
+		if (req.getSession() == null) {
 			resp.sendRedirect( req.getContextPath() + "/LoginServlet" );
-
 		}
+		List<Researcher> researchers = ResearcherDAOImplementation.getInstance().readAll();
+		List<Publication> publications = PublicationDAOImplementation.getInstance().readAll();
+		req.getSession().setAttribute( "researcherslist", researchers );
+		req.getSession().setAttribute( "publicationslist", publications );
+		getServletContext().getRequestDispatcher( "/AdminView.jsp" ).forward( req, resp );
 
 	}
 

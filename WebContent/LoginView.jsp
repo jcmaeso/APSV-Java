@@ -12,8 +12,7 @@
 		<h2>Login</h2>
 		<form action="LoginServlet" method="post">
 			Email: <input type="text" name="email" placeholder="Email" />
-			Password: <input type="password" name="password"
-				placeholder="Password" />
+			Password: <input type="password" name="password" placeholder="Password" />
 			<button type="submit">Login</button>
 		</form>
 	</shiro:guest>

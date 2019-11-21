@@ -14,6 +14,7 @@ import es.upm.dit.apsv.cris.dao.PublicationDAOImplementation;
 import es.upm.dit.apsv.cris.dao.ResearcherDAO;
 import es.upm.dit.apsv.cris.dao.ResearcherDAOImplementation;
 import es.upm.dit.apsv.cris.model.Publication;
+import es.upm.dit.apsv.cris.model.Researcher;
 
 /**
  * Servlet implementation class ResearcherServlet
@@ -22,13 +23,9 @@ import es.upm.dit.apsv.cris.model.Publication;
 public class ResearcherServlet extends HttpServlet {
 protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
-		ResearcherDAO pdao = ResearcherDAOImplementation.getInstance();
 		String researcherId = (String) request.getParameter("id");
-		
-		request.getSession().setAttribute ("researcherid", pdao.read(researcherId));
-		
+		Researcher researcher = ResearcherDAOImplementation.getInstance().read(researcherId);
+		request.getSession().setAttribute ("researcherid", researcher);
 		getServletContext().getRequestDispatcher("/ResearcherView.jsp").forward(request, response);
-
 	}
 }
